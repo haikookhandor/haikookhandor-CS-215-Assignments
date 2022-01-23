@@ -19,7 +19,6 @@ int main()
 
     // we have divided by 15 so that the values of the matrix are from 0.0 to 9.0
 
-    clock_1 = clock();
     for (int i = 0; i < a; i++)
     {
         for (int j = 0; j < a; j++)
@@ -35,6 +34,8 @@ int main()
             arr2[i][j] = (rand() % (10));
         }
     }
+
+    clock_1 = clock();
 
     for (int i = 0; i < a; i++)
     {
