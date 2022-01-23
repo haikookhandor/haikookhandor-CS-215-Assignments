@@ -1,5 +1,6 @@
-#include <iostream>
-#include <ctime>
+#include <bits/stdc++.h>
+#include <sys/time.h>
+
 using namespace std;
 
 std::ostream &
@@ -9,7 +10,7 @@ operator<<(std::ostream &dest, __int128_t value)
     if (s)
     {
         __uint128_t tmp = value < 0 ? -value : value;
-        char buffer[256];
+        char buffer[128];
         char *d = std::end(buffer);
         do
         {
@@ -31,25 +32,35 @@ operator<<(std::ostream &dest, __int128_t value)
     return dest;
 }
 
+struct timespec;
+
+time_t clk_1;
+time_t clk_2;
+
 int main()
 {
-    timespec start, end;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-    int n;
-    cin >> n;
-    __int128 t1 = 0;
-    __int128 t2 = 1;
-    __int128 nextTerm = t1 + t2;
-    cout << t1 << " " << t2 << " ";
-    for (int i = 2; i < n; i++)
+    ;
+
+    clk_1 = clock();
+
+    __int128 t1 = 0, t2 = 1;
+    cout << t1 << " ";
+    for (int i = 1; i <= 100; i++)
     {
-        cout << nextTerm << " ";
+        cout << t2 << " ";
+        __int128 nextTerm = t1;
         t1 = t2;
-        t2 = nextTerm;
-        nextTerm = t1 + t2;
+        t2 = t2 + nextTerm;
     }
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
-    __int128 nanoseconds = end.tv_nsec - start.tv_nsec;
-    cout << "\nTime taken: " << nanoseconds * (1e-6) << " miliseconds\n";
+
+    cout << "\n";
+
+    clk_2 = clock() - clk_1;
+    float CPU = (float)clk_2 / CLOCKS_PER_SEC;
+    cout << "The time taken by the program on CPU using timespec is:"
+         << " ";
+    cout << CPU << endl;
+    float CPU_baseline = (float)clk_2 / CLOCKS_PER_SEC;
+
     return 0;
 }

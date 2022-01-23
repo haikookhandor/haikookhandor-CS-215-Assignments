@@ -1,5 +1,5 @@
-#include <iostream>
-#include <ctime>
+#include <bits/stdc++.h>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -32,26 +32,31 @@ operator<<(std::ostream &dest, __int128_t value)
     return dest;
 }
 
+struct timespec;
+
+time_t clk_1;
+time_t clk_2;
+
 int main()
 {
-    timespec start, end;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-    int n;
-    cin >> n;
+    clk_1 = clock();
     __int128 array[101];
     array[0] = 0;
     array[1] = 1;
-    for (int i = 2; i < n; i++)
+    for (int i = 2; i < 100; i++)
     {
         array[i] = array[i - 1] + array[i - 2];
     }
-    for (int j = 0; j < n; j++)
+    for (int j = 0; j < 100; j++)
     {
         cout << array[j] << " ";
     }
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
-    __int128 nanoseconds = end.tv_nsec - start.tv_nsec;
-    cout << "\nTime taken: " << nanoseconds << " nanoseconds\n";
+    clk_2 = clock() - clk_1;
+    float CPU = (float)clk_2 / CLOCKS_PER_SEC;
+    cout << "The time taken by the program on CPU using timespec is:"
+         << " ";
+    cout << CPU << endl;
+    float CPU_baseline = (float)clk_2 / CLOCKS_PER_SEC;
 
     return 0;
 }

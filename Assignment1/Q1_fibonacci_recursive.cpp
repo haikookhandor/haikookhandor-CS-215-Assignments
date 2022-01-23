@@ -1,7 +1,8 @@
-#include <iostream>
-#include <ctime>
+#include <bits/stdc++.h>
+#include <sys/time.h>
 
 using namespace std;
+
 __int128 fibonacci_recursion(int n)
 {
     if (n == 1)
@@ -12,8 +13,7 @@ __int128 fibonacci_recursion(int n)
     {
         return 1;
     }
-    __int128 smallNumber = fibonacci_recursion(n - 1) + fibonacci_recursion(n - 2);
-    return smallNumber;
+    return fibonacci_recursion(n - 1) + fibonacci_recursion(n - 2);
 }
 
 std::ostream &
@@ -45,18 +45,23 @@ operator<<(std::ostream &dest, __int128_t value)
     return dest;
 }
 
+struct timespec;
+
+time_t clk_1;
+time_t clk_2;
+
 int main()
 {
-    timespec start, end;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-    int n;
-    cin >> n;
-    for (int i = 1; i < n + 1; i++)
+    clk_1 = clock();
+    for (int i = 1; i < 101; i++)
     {
         cout << fibonacci_recursion(i) << " ";
     }
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
-    __int128 nanoseconds = end.tv_nsec - start.tv_nsec;
-    cout << "\nTime taken: " << nanoseconds * (1e-6) << " miliseconds\n";
+    clk_2 = clock() - clk_1;
+    float CPU = (float)clk_2 / CLOCKS_PER_SEC;
+    cout << "The time taken by the program on CPU using timespec is:"
+         << " ";
+    cout << CPU << endl;
+    float CPU_baseline = (float)clk_2 / CLOCKS_PER_SEC;
     return 0;
 }

@@ -1,28 +1,7 @@
-#include <iostream>
-#include <ctime>
+#include <bits/stdc++.h>
+#include <sys/time.h>
 
 using namespace std;
-__int128 array[101];
-__int128 fibonacci_recursion_memoization(int n)
-{
-    if (n == 1)
-    {
-        return 0;
-    }
-    if (n == 2)
-    {
-        return 1;
-    }
-    if (array[n] != 0)
-    {
-        return array[n];
-    }
-    else
-    {
-        array[n] = fibonacci_recursion_memoization(n - 1) + fibonacci_recursion_memoization(n - 2);
-        return array[n];
-    }
-}
 
 std::ostream &
 operator<<(std::ostream &dest, __int128_t value)
@@ -53,18 +32,47 @@ operator<<(std::ostream &dest, __int128_t value)
     return dest;
 }
 
+struct timespec;
+
+time_t clk_1;
+time_t clk_2;
+
+__int128 arr[1000];
+
+__int128 fibonacci_recursion_memoization(int n)
+{
+    if (n == 1)
+    {
+        return 0;
+    }
+    if (n == 2)
+    {
+        return 1;
+    }
+    if (arr[n] != 0)
+    {
+        return arr[n];
+    }
+    else
+    {
+        arr[n] = fibonacci_recursion_memoization(n - 1) + fibonacci_recursion_memoization(n - 2);
+        return arr[n];
+    }
+}
+
 int main()
 {
-    timespec start, end;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
-    int n;
-    cin >> n;
-    for (int i = 1; i < n + 1; i++)
+    clk_1 = clock();
+
+    for (int i = 1; i < 101; i++)
     {
         cout << fibonacci_recursion_memoization(i) << " ";
     }
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
-    __int128 nanoseconds = end.tv_nsec - start.tv_nsec;
-    cout << "\nTime taken: " << nanoseconds << " Nanoseconds\n";
+    clk_2 = clock() - clk_1;
+    float CPU = (float)clk_2 / CLOCKS_PER_SEC;
+    cout << "The time taken by the program on CPU using timespec is:"
+         << " ";
+    cout << CPU << endl;
+    float CPU_baseline = (float)clk_2 / CLOCKS_PER_SEC;
     return 0;
 }
