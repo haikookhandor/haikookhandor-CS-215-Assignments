@@ -19,7 +19,7 @@ int main()
     int arr2[a][a];
     int final_array[a][a];
 
-    // we have divided by 15 so that the values of the matrix are from 0 to 9
+    // we have divided by 10 so that the values of the matrix are from 0 to 9
 
     for (int i = 0; i < a; i++)
     {
@@ -60,7 +60,7 @@ int main()
 
     clock_2 = clock() - clock_1;
     float time = (float)clock_2 / CLOCKS_PER_SEC;
-    cout << "The time is:"
+    cout << "The time taken is:"
          << " " << time << "\n";
 
     return 0;
